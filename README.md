@@ -26,6 +26,8 @@ CI/CD
 A GitHub Actions workflow validates the repository structure on every push, confirming the /docs folder exists and contains the required planning files.
 
 Build status:
+<img width="1917" height="897" alt="image" src="https://github.com/user-attachments/assets/ee0186ec-0dba-4eff-8a3c-8d52b414c9d9" />
+
 
 Video Walkthrough
 
