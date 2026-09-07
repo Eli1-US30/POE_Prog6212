@@ -35,7 +35,7 @@ An unlisted YouTube video walking through the ERD design decisions, the endpoint
 
 YouTube Video Link – Part 1 Walkthrough
 
-(Replace this link with your actual unlisted YouTube URL once uploaded.)
+https://youtu.be/HNjIRYMgu8c
 
 Running the SQL script
 Open SQL Server Management Studio (SSMS) and connect to a local SQL Server instance.
