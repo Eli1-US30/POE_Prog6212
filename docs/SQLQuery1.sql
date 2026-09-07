@@ -144,7 +144,8 @@ INSERT INTO Results (EnrolmentID, FinishTime, FinishPosition) VALUES
 (1, '00:52:30', 47),
 (2, '00:55:10', 63);
 GO
- 
+   
+ Select * From Roles
  Select * From Users
  Select * From Events
  Select * From Categories
