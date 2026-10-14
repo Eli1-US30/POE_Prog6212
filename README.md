@@ -19,7 +19,7 @@ What's in this repository
 The /docs folder contains all Part 1 planning deliverables:
 
 ERD_RaceDay.drawio.png – Entity Relationship Diagram covering all six entities (Roles, Users, Events, Categories, Enrolments, Results), with primary keys, foreign keys, and cardinality shown for every relationship.
-APIEndpoint_Plan.md – a full table of every planned API endpoint, covering Authentication, User Profile, Events, Categories, Enrolments, and Results, including HTTP method, route, description, required role, request body, and expected response for each.
+APIEndpoint_POE.md – a full table of every planned API endpoint, covering Authentication, User Profile, Events, Categories, Enrolments, and Results, including HTTP method, route, description, required role, request body, and expected response for each.
 RaceDay_Database.sql – a SQL Server script that creates the full database schema matching the ERD exactly, including all constraints, and seeds the database with sample data (2 Organisers, 2 Participants, 3 Events, categories for each event, and sample enrolments and results).
 CI/CD
 
