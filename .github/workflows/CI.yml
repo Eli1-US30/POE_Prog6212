@@ -27,6 +27,6 @@ jobs:
         run: |
           test -f "docs/APIEndPoint_POE.docx"
           test -f "docs/ERD_RaceDay.drawio.png"
-          test -f "docs/SQLQuery1.sql"
+          test -f "docs/RaceDay_Database.sql"
 
           echo "SUCCESS: All required files are present in docs."
