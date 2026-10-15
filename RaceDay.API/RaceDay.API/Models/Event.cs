@@ -9,9 +9,9 @@
         public string? Description { get; set; }
         public string Location { get; set; } = string.Empty;
         public string EventType { get; set; } = string.Empty;
-        public DateTime StartDate { get; set; }
+        public DateTime EventDate { get; set; }
         public decimal DistanceKm { get; set; }
-        public string? BannerImageURL { get; set; }
+        public string? BannerImageUrl { get; set; }
         public User Organiser { get; set; } = null!;
         public List<Category> Categories { get; set; } = new List<Category>();
         public List<Enrolment> Enrolments { get; set; } = new List<Enrolment>();

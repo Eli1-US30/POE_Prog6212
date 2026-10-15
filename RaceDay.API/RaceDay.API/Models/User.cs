@@ -3,13 +3,13 @@
     public class User
     {
         public int UserId { get; set; }
-        public Role RoleId { get; set; } = null!;
+        public int RoleId { get; set; }
         public Role Role { get; set; } = null!;
         public string FullName { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string? ProfilePictureURL { get; set; }
-        public DateTime DateOnly { get; set; }
+        public string? ProfilePictureUrl { get; set; }
+        public DateTime CreatedAt { get; set; }
         public List<Event> OrganisedEvents { get; set; } = new List<Event>();
         public List<Enrolment> Enrolments { get; set; } = new List<Enrolment>();
 
