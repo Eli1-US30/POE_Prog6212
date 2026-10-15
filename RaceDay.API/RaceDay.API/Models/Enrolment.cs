@@ -2,5 +2,15 @@
 {
     public class Enrolment
     {
+        public int EnrolmentId { get; set; }
+        public int ParticipantId { get; set; }
+        public int CategoryId { get; set; }
+        public int EventId { get; set; }
+        public DateTime EnrolmentDate { get; set; }
+        public string Status { get; set; } = string.Empty;
+        public User Participant { get; set; } = null!;
+        public Result? Event { get; set; }
+        public Result? Category { get; set; }
+        public Result? Result { get; set; }
     }
 }

@@ -12,5 +12,8 @@
         public DateTime StartDate { get; set; }
         public decimal DistanceKm { get; set; }
         public string? BannerImageURL { get; set; }
+        public User Organiser { get; set; } = null!;
+        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<Enrolment> Enrolments { get; set; } = new List<Enrolment>();
     }
 }

@@ -10,7 +10,7 @@
         public string Email { get; set; } = string.Empty;
         public string? ProfilePictureURL { get; set; }
         public DateTime DateOnly { get; set; }
-        public List<Category> Categories { get; set; } = new List<Category>();
+        public List<Event> OrganisedEvents { get; set; } = new List<Event>();
         public List<Enrolment> Enrolments { get; set; } = new List<Enrolment>();
 
     }
