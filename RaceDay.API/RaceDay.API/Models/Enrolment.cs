@@ -9,8 +9,8 @@
         public DateTime EnrolmentDate { get; set; }
         public string Status { get; set; } = string.Empty;
         public User Participant { get; set; } = null!;
-        public User Event { get; set; } = null!;
-        public User Category { get; set; } = null!;
+        public Event Event { get; set; } = null!;
+        public Category Category { get; set; } = null!;
         public Result? Result { get; set; }
     }
 }
