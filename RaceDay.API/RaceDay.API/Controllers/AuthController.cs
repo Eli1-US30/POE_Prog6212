@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RaceDay.API.Authorization;
 using RaceDay.API.Data;
 using RaceDay.API.Dtos;
 using RaceDay.API.Models;
@@ -77,6 +78,18 @@ namespace RaceDay.API.Controllers
 
             HttpContext.Session.Clear();
             return Ok("Logged out.");
+        }
+    }
+
+    [ApiController]
+    [Route("api/organiser")]
+    [SessionAuthorize("Organiser")]
+    public class OrganiserController : ControllerBase
+    {
+        [HttpGet("dashboard")]
+        public IActionResult Dashboard()
+        {
+            return Ok("Organiser access granted.");
         }
     }
 }
