@@ -23,6 +23,9 @@ namespace RaceDay.API.Data
             // Roles
             modelBuilder.Entity<Role>().Property(r => r.RoleName).IsRequired().HasMaxLength(20);
             modelBuilder.Entity<Role>().HasIndex(r => r.RoleName).IsUnique();
+            modelBuilder.Entity<Role>().HasData(
+                new Role { RoleId = 1, RoleName = "Organiser" },
+                new Role { RoleId = 2, RoleName = "Participant" });
 
             // Users
             modelBuilder.Entity<User>().Property(u => u.FullName).IsRequired().HasMaxLength(100);

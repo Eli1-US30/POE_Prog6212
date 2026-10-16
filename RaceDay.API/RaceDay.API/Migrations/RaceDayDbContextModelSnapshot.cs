@@ -199,6 +199,18 @@ namespace RaceDay.API.Migrations
                         .IsUnique();
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1,
+                            RoleName = "Organiser"
+                        },
+                        new
+                        {
+                            RoleId = 2,
+                            RoleName = "Participant"
+                        });
                 });
 
             modelBuilder.Entity("RaceDay.API.Models.User", b =>
