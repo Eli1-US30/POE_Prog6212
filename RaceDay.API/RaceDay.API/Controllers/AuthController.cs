@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RaceDay.API.Authorization;
+using RaceDay.API.Security;
 using RaceDay.API.Data;
 using RaceDay.API.Dtos;
 using RaceDay.API.Models;
