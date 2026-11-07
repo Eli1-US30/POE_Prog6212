@@ -1,0 +1,65 @@
+﻿@model List<RaceDay.MVC.Models.EventSummary>
+@{
+    ViewData["Title"] = "Organiser dashboard";
+    var upcoming = Model.Where(e => e.EventDate >= DateTime.Today).OrderBy(e => e.EventDate).ToList();
+}
+
+<h1 class="h3 mb-4">Organiser dashboard</h1>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card text-center"><div class="card-body">
+            <div class="display-6">@Model.Count</div><div class="text-muted">Events created</div>
+        </div></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center"><div class="card-body">
+            <div class="display-6">@Model.Sum(e => e.EnrolmentCount)</div><div class="text-muted">Total enrolments</div>
+        </div></div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center"><div class="card-body">
+            <div class="display-6">@upcoming.Count</div><div class="text-muted">Upcoming events</div>
+        </div></div>
+    </div>
+</div>
+
+<h2 class="h5">Enrolments per event</h2>
+@if (!Model.Any())
+{
+    <p class="text-muted">You have not created any events yet. <a asp-action="CreateEvent">Create your first event</a>.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead><tr><th>Event</th><th>Date</th><th>Enrolments</th></tr></thead>
+        <tbody>
+        @foreach (var e in Model)
+        {
+            <tr>
+                <td>@e.Name</td>
+                <td>@e.EventDate.ToString("dd MMM yyyy")</td>
+                <td>@e.EnrolmentCount</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<h2 class="h5 mt-4">Upcoming events</h2>
+@if (!upcoming.Any())
+{
+    <p class="text-muted">No upcoming events.</p>
+}
+else
+{
+    <ul class="list-group">
+    @foreach (var e in upcoming)
+    {
+        <li class="list-group-item d-flex justify-content-between">
+            <span>@e.Name, @e.Location</span>
+            <span class="text-muted">@e.EventDate.ToString("dd MMM yyyy")</span>
+        </li>
+    }
+    </ul>
+}

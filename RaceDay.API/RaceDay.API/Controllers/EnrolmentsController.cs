@@ -74,15 +74,17 @@ namespace RaceDay.API.Controllers
 
             var items = await _context.Enrolments
                 .Where(e => e.EventId == id)
-                .Select(e => new
-                {
-                    e.EnrolmentId,
-                    ParticipantName = e.Participant.FullName,
-                    ParticipantEmail = e.Participant.Email,
-                    CategoryName = e.Category.CategoryName,
-                    e.Status,
-                    e.EnrolmentDate
-                })
+               .Select(e => new
+               {
+                   e.EnrolmentId,
+                   ParticipantName = e.Participant.FullName,
+                   ParticipantEmail = e.Participant.Email,
+                   CategoryName = e.Category.CategoryName,
+                   e.Status,
+                   e.EnrolmentDate,
+                   FinishTime = e.Result != null ? (TimeSpan?)e.Result.FinishTime : null,
+                   FinishPosition = e.Result != null ? (int?)e.Result.FinishPosition : null
+               })
                 .ToListAsync();
             return Ok(items);
         }

@@ -16,10 +16,14 @@ namespace RaceDay.MVC.Services
             get
             {
                 if (IsSuccess) return string.Empty;
-                if (StatusCode == 503) return Body;
-                if (StatusCode == 401) return "Please log in to continue.";
-                if (StatusCode == 403) return "You do not have permission to do that.";
 
+                var text = Body.Trim().Trim('"');
+
+                // Plain-text messages from the API (like "Invalid email or password.") are already user-friendly
+                if (!string.IsNullOrWhiteSpace(text) && !text.StartsWith("{"))
+                    return text;
+
+                // Validation errors arrive as JSON: { "errors": { "Field": ["message"] } }
                 try
                 {
                     using var doc = JsonDocument.Parse(Body);
@@ -30,11 +34,15 @@ namespace RaceDay.MVC.Services
                         return string.Join(" ", messages);
                     }
                 }
-                catch (JsonException) { } // plain-text error, handled below
+                catch (JsonException) { }
 
-                return string.IsNullOrWhiteSpace(Body)
-                    ? "Something went wrong. Please try again."
-                    : Body.Trim('"');
+                return StatusCode switch
+                {
+                    401 => "Please log in to continue.",
+                    403 => "You do not have permission to do that.",
+                    404 => "That item could not be found.",
+                    _ => "Something went wrong. Please try again."
+                };
             }
         }
 

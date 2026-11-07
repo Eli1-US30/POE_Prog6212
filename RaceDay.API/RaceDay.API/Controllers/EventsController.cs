@@ -22,6 +22,30 @@ namespace RaceDay.API.Controllers
 
         private int CurrentUserId => HttpContext.Session.GetInt32("UserId")!.Value;
 
+        [HttpGet("mine")]
+        [SessionAuthorize("Organiser")]
+        public async Task<IActionResult> GetMyEvents()
+        {
+            var events = await _context.Events
+                .Where(e => e.OrganiserId == CurrentUserId)
+                .OrderBy(e => e.EventDate)
+                .Select(e => new
+                {
+                    e.EventId,
+                    e.Name,
+                    e.Description,
+                    e.EventDate,
+                    e.Location,
+                    e.DistanceKm,
+                    e.EventType,
+                    e.BannerImageUrl,
+                    e.OrganiserId,
+                    EnrolmentCount = e.Enrolments.Count
+                })
+                .ToListAsync();
+            return Ok(events);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetEvents()
         {
