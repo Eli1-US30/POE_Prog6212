@@ -10,7 +10,6 @@ on:
 jobs:
   check-docs:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -28,5 +27,24 @@ jobs:
           test -f "docs/APIEndPoint_POE.docx"
           test -f "docs/ERD_RaceDay.drawio.png"
           test -f "docs/RaceDay_Database.sql"
-
           echo "SUCCESS: All required files are present in docs."
+
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore dependencies
+        run: dotnet restore RaceDay.API/RaceDay.Tests/RaceDay.Tests.csproj
+
+      - name: Build
+        run: dotnet build RaceDay.API/RaceDay.Tests/RaceDay.Tests.csproj --no-restore --configuration Release
+
+      - name: Run unit tests
+        run: dotnet test RaceDay.API/RaceDay.Tests/RaceDay.Tests.csproj --no-build --configuration Release --verbosity normal
