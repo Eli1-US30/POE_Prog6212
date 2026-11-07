@@ -26,13 +26,16 @@ else
                 <td>@e.DistanceKm km</td>
                 <td>@e.EventType</td>
                 <td>@e.EnrolmentCount</td>
-                <td class="text-end">
-                    <a asp-action="EditEvent" asp-route-id="@e.EventId" class="btn btn-sm btn-outline-primary">Edit</a>
-                    <form asp-action="DeleteEvent" asp-route-id="@e.EventId" method="post" class="d-inline"
-                          onsubmit="return confirm('Delete this event? This cannot be undone.');">
-                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-                    </form>
-                </td>
+                <td class="text-end text-nowrap">
+    <a asp-action="Categories" asp-route-id="@e.EventId" class="btn btn-sm btn-outline-secondary">Categories</a>
+    <a asp-action="Enrolments" asp-route-id="@e.EventId" class="btn btn-sm btn-outline-secondary">Enrolments</a>
+    <a asp-action="Results" asp-route-id="@e.EventId" class="btn btn-sm btn-outline-secondary">Results</a>
+    <a asp-action="EditEvent" asp-route-id="@e.EventId" class="btn btn-sm btn-outline-primary">Edit</a>
+    <form asp-action="DeleteEvent" asp-route-id="@e.EventId" method="post" class="d-inline"
+          onsubmit="return confirm('Delete this event? This cannot be undone.');">
+        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+    </form>
+</td>
             </tr>
         }
         </tbody>

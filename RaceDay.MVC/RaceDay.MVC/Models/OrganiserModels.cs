@@ -44,4 +44,56 @@ namespace RaceDay.MVC.Models
 
         public string? BannerImageUrl { get; set; } // filled in by the banner upload later
     }
+    public class CategoryItem
+    {
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; } = string.Empty;
+        public int? MinAge { get; set; }
+        public int? MaxAge { get; set; }
+        public decimal? DistanceKm { get; set; }
+    }
+
+    public class CategoryFormViewModel
+    {
+        public int EventId { get; set; }
+
+        [Required, StringLength(50), Display(Name = "Category name")]
+        public string CategoryName { get; set; } = string.Empty;
+
+        [Range(0, 120), Display(Name = "Minimum age")]
+        public int? MinAge { get; set; }
+
+        [Range(0, 120), Display(Name = "Maximum age")]
+        public int? MaxAge { get; set; }
+
+        [Range(0.01, 9999.99), Display(Name = "Distance (km)")]
+        public decimal? DistanceKm { get; set; }
+    }
+
+    public class CategoriesPageViewModel
+    {
+        public int EventId { get; set; }
+        public string EventName { get; set; } = string.Empty;
+        public List<CategoryItem> Categories { get; set; } = new();
+        public CategoryFormViewModel Form { get; set; } = new();
+    }
+
+    public class EnrolmentItem
+    {
+        public int EnrolmentId { get; set; }
+        public string ParticipantName { get; set; } = string.Empty;
+        public string ParticipantEmail { get; set; } = string.Empty;
+        public string CategoryName { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
+        public DateTime EnrolmentDate { get; set; }
+        public TimeSpan? FinishTime { get; set; }
+        public int? FinishPosition { get; set; }
+    }
+
+    public class EnrolmentsPageViewModel
+    {
+        public int EventId { get; set; }
+        public string EventName { get; set; } = string.Empty;
+        public List<EnrolmentItem> Enrolments { get; set; } = new();
+    }
 }
