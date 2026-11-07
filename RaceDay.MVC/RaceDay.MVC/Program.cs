@@ -1,7 +1,19 @@
+using RaceDay.MVC.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession();
+builder.Services.AddHttpClient<ApiClient>(client =>
+{
+    client.BaseAddress = new Uri(builder.Configuration["ApiSettings:BaseUrl"]!);
+})
+// Cookies are handled by hand above. Without this, the shared HTTP handler would
+// keep one cookie jar for ALL users and could mix their sessions up.
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler { UseCookies = false });
 
 var app = builder.Build();
 
@@ -15,7 +27,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
+app.UseSession();
 app.UseAuthorization();
 
 app.MapStaticAssets();
