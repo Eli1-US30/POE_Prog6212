@@ -47,10 +47,24 @@ namespace RaceDay.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEvents()
+        public async Task<IActionResult> GetEvents(string? type, string? search, DateTime? fromDate, DateTime? toDate)
         {
-            var events = await _context.Events
-                .Where(e => e.EventDate >= DateTime.Today)
+            var query = _context.Events.Where(e => e.EventDate >= DateTime.Today);
+
+            if (!string.IsNullOrWhiteSpace(type))
+            {
+                var eventType = type.Trim().ToLower();
+                query = query.Where(e => e.EventType == eventType);
+            }
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                var term = search.Trim();
+                query = query.Where(e => e.Name.Contains(term) || e.Location.Contains(term));
+            }
+            if (fromDate != null) query = query.Where(e => e.EventDate >= fromDate.Value);
+            if (toDate != null) query = query.Where(e => e.EventDate <= toDate.Value);
+
+            var events = await query
                 .OrderBy(e => e.EventDate)
                 .Select(e => new { e.EventId, e.Name, e.Description, e.EventDate, e.Location, e.DistanceKm, e.EventType, e.BannerImageUrl, e.OrganiserId })
                 .ToListAsync();

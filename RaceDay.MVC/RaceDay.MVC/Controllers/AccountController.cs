@@ -66,9 +66,12 @@ namespace RaceDay.MVC.Controllers
             HttpContext.Session.SetString("FullName", user.FullName);
             HttpContext.Session.SetString("Role", user.Role);
 
-            return user.Role == "Organiser"
-                ? RedirectToAction("Dashboard", "Organiser")
-                : RedirectToAction("Index", "Home");
+            return user.Role switch
+            {
+                "Organiser" => RedirectToAction("Dashboard", "Organiser"),
+                "Participant" => RedirectToAction("Index", "Participant"),
+                _ => RedirectToAction("Index", "Home")
+            };
         }
 
         [HttpPost]

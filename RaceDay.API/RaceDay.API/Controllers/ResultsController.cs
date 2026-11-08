@@ -54,7 +54,8 @@ namespace RaceDay.API.Controllers
                     r.Enrolment.Event.EventDate,
                     CategoryName = r.Enrolment.Category.CategoryName,
                     r.FinishTime,
-                    r.FinishPosition
+                    r.FinishPosition,
+                    TotalFinishers = _context.Results.Count(x => x.Enrolment.EventId == r.Enrolment.EventId)
                 })
                 .ToListAsync();
             return Ok(items);

@@ -32,6 +32,16 @@
                             <li class="nav-item"><a class="nav-link text-dark" asp-controller="Organiser" asp-action="Dashboard">Dashboard</a></li>
                             <li class="nav-item"><a class="nav-link text-dark" asp-controller="Organiser" asp-action="Events">My events</a></li>
                         }
+                        @if (role == "Participant")
+{
+    <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="Index">Events</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="MyEnrolments">My enrolments</a></li>
+    <li class="nav-item"><a class="nav-link text-dark" asp-controller="Participant" asp-action="MyResults">My results</a></li>
+}
+@if (role != null)
+{
+    <li class="nav-item"><a class="nav-link text-dark" asp-controller="Profile" asp-action="Index">Profile</a></li>
+}
                     </ul>
                     <ul class="navbar-nav">
                         @if (role != null)

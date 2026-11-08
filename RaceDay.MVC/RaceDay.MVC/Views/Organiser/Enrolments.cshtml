@@ -1,0 +1,29 @@
+﻿@model RaceDay.MVC.Models.EnrolmentsPageViewModel
+@{ ViewData["Title"] = "Enrolments"; }
+
+<a asp-action="Events" class="text-decoration-none">&larr; Back to my events</a>
+<h1 class="h3 mt-2">Enrolments</h1>
+<p class="text-muted">@Model.EventName, @Model.Enrolments.Count participant(s)</p>
+
+@if (!Model.Enrolments.Any())
+{
+    <p class="text-muted">Nobody has enrolled in this event yet.</p>
+}
+else
+{
+    <table class="table table-striped align-middle">
+        <thead><tr><th>Participant</th><th>Email</th><th>Category</th><th>Status</th><th>Enrolled on</th></tr></thead>
+        <tbody>
+        @foreach (var e in Model.Enrolments)
+        {
+            <tr>
+                <td>@e.ParticipantName</td>
+                <td>@e.ParticipantEmail</td>
+                <td>@e.CategoryName</td>
+                <td><partial name="_StatusBadge" model="e.Status" /></td>
+                <td>@e.EnrolmentDate.ToString("dd MMM yyyy")</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
