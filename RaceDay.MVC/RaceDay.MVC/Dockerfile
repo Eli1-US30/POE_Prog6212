@@ -1,30 +1,27 @@
-# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+# syntax=docker/dockerfile:1
 
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
-
-# This stage is used to build the service project
+# ---------- Build stage: compile and publish ----------
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["RaceDay.MVC/RaceDay.MVC.csproj", "RaceDay.MVC/"]
-RUN dotnet restore "./RaceDay.MVC/RaceDay.MVC.csproj"
-COPY . .
-WORKDIR "/src/RaceDay.MVC"
-RUN dotnet build "./RaceDay.MVC.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# This stage is used to publish the service project to be copied to the final stage
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./RaceDay.MVC.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+# Copy only the project file first, so the restore layer is cached until the dependencies change
+COPY RaceDay.MVC.csproj ./
+RUN dotnet restore
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
-FROM base AS final
+# Copy the rest of the source and publish a release build
+COPY . ./
+RUN dotnet publish -c Release -o /app/publish --no-restore /p:UseAppHost=false
+
+# ---------- Runtime stage: small image with only what is needed to run ----------
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+# Run as a non-root user (built into Microsoft's ASP.NET images)
+USER $APP_UID
+
+COPY --from=build /app/publish .
+
+ENV ASPNETCORE_HTTP_PORTS=8080
+EXPOSE 8080
+
 ENTRYPOINT ["dotnet", "RaceDay.MVC.dll"]
