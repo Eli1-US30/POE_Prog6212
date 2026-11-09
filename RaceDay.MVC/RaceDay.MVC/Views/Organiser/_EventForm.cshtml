@@ -40,4 +40,12 @@
         <input asp-for="DistanceKm" class="form-control" type="number" step="0.01" />
         <span asp-validation-for="DistanceKm" class="text-danger"></span>
     </div>
+    <div class="mb-3">
+        <label class="form-label">Banner image <span class="text-muted">(optional, JPG, PNG or WebP, max 5 MB)</span></label>
+        <input type="file" name="bannerFile" class="form-control" accept="image/jpeg,image/png,image/webp" />
+        @if (!string.IsNullOrEmpty(Model.BannerImageUrl))
+        {
+            <img src="@Model.BannerImageUrl" alt="Current banner" class="img-thumbnail mt-2" style="max-height:120px" />
+        }
+    </div>
 </div>

@@ -96,4 +96,9 @@ namespace RaceDay.MVC.Models
         public string EventName { get; set; } = string.Empty;
         public List<EnrolmentItem> Enrolments { get; set; } = new();
     }
+    public class CreatedEvent
+    {
+        public int EventId { get; set; }
+        public string Name { get; set; } = string.Empty;
+    }
 }

@@ -61,6 +61,16 @@ namespace RaceDay.MVC.Services
             }
         }
 
+        public async Task<ApiResponse> UploadFileAsync(string path, IFormFile file)
+        {
+            using var content = new MultipartFormDataContent();
+            using var stream = file.OpenReadStream();
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+            content.Add(fileContent, "file", file.FileName); // "file" matches the API's parameter name
+            return await SendMultipartAsync(HttpMethod.Post, path, content);
+        }
+
         // If the API issued a session cookie, keep it in the MVC user's own session
         private void StoreCookie(HttpResponseMessage response)
         {

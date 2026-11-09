@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RaceDay.MVC.Filters;
+using RaceDay.MVC.Helpers;
 using RaceDay.MVC.Models;
 using RaceDay.MVC.Services;
 
@@ -56,6 +57,28 @@ namespace RaceDay.MVC.Controllers
             {
                 TempData["Error"] = response.ErrorMessage;
             }
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadPicture(IFormFile? file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                TempData["Error"] = "Please choose an image first.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var error = UploadRules.Validate(file);
+            if (error != null)
+            {
+                TempData["Error"] = error;
+                return RedirectToAction(nameof(Index));
+            }
+
+            var response = await _api.UploadFileAsync("api/users/profile/picture", file);
+            if (response.IsSuccess) TempData["Success"] = "Profile picture updated.";
+            else TempData["Error"] = response.ErrorMessage;
             return RedirectToAction(nameof(Index));
         }
     }

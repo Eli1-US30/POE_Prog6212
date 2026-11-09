@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RaceDay.MVC.Filters;
+using RaceDay.MVC.Helpers;
 using RaceDay.MVC.Models;
 using RaceDay.MVC.Services;
 using System.Globalization;
@@ -35,8 +36,10 @@ namespace RaceDay.MVC.Controllers
         public IActionResult CreateEvent() => View(new EventFormViewModel());
 
         [HttpPost]
-        public async Task<IActionResult> CreateEvent(EventFormViewModel model)
+        public async Task<IActionResult> CreateEvent(EventFormViewModel model, IFormFile? bannerFile)
         {
+            var fileError = UploadRules.Validate(bannerFile);
+            if (fileError != null) ModelState.AddModelError(string.Empty, fileError);
             if (!ModelState.IsValid) return View(model);
 
             var response = await _api.PostAsync("api/events", ToApiBody(model));
@@ -46,9 +49,22 @@ namespace RaceDay.MVC.Controllers
                 return View(model);
             }
 
+            // The event must exist before it can have a banner, so the upload happens second
+            var created = response.ReadAs<CreatedEvent>();
+            if (bannerFile != null && bannerFile.Length > 0 && created != null)
+            {
+                var upload = await _api.UploadFileAsync($"api/events/{created.EventId}/banner", bannerFile);
+                if (!upload.IsSuccess)
+                {
+                    TempData["Error"] = "Event created, but the banner could not be uploaded: " + upload.ErrorMessage;
+                    return RedirectToAction(nameof(Events));
+                }
+            }
+
             TempData["Success"] = "Event created.";
             return RedirectToAction(nameof(Events));
         }
+
 
         [HttpGet]
         public async Task<IActionResult> EditEvent(int id)
@@ -77,8 +93,10 @@ namespace RaceDay.MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditEvent(EventFormViewModel model)
+        public async Task<IActionResult> EditEvent(EventFormViewModel model, IFormFile? bannerFile)
         {
+            var fileError = UploadRules.Validate(bannerFile);
+            if (fileError != null) ModelState.AddModelError(string.Empty, fileError);
             if (!ModelState.IsValid) return View(model);
 
             var response = await _api.PutAsync($"api/events/{model.EventId}", ToApiBody(model));
@@ -86,6 +104,16 @@ namespace RaceDay.MVC.Controllers
             {
                 ModelState.AddModelError(string.Empty, response.ErrorMessage);
                 return View(model);
+            }
+
+            if (bannerFile != null && bannerFile.Length > 0)
+            {
+                var upload = await _api.UploadFileAsync($"api/events/{model.EventId}/banner", bannerFile);
+                if (!upload.IsSuccess)
+                {
+                    TempData["Error"] = "Event updated, but the banner could not be uploaded: " + upload.ErrorMessage;
+                    return RedirectToAction(nameof(Events));
+                }
             }
 
             TempData["Success"] = "Event updated.";
