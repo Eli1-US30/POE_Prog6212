@@ -4,16 +4,24 @@
     var fullName = Context.Session.GetString("FullName");
 }
 
-<div class="text-center mt-4">
-    <h1 class="display-5">RaceDay</h1>
-    @if (role != null)
+<div class="rd-hero">
+    <h1>Run. Walk. Ride.</h1>
+    @if (role == null)
     {
-        <p class="lead">Welcome back, @fullName. You are logged in as @role.</p>
+        <p class="lead mb-4">Find and enter running, walking and cycling events across South Africa, or run your own.</p>
+        <a asp-controller="Account" asp-action="Register" class="btn btn-primary btn-lg">Get started</a>
+        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-light btn-lg">Log in</a>
+    }
+    else if (role == "Organiser")
+    {
+        <p class="lead mb-4">Welcome back, @fullName. Manage your events and record results.</p>
+        <a asp-controller="Organiser" asp-action="Dashboard" class="btn btn-primary btn-lg">Go to dashboard</a>
+        <a asp-controller="Organiser" asp-action="Events" class="btn btn-outline-light btn-lg">My events</a>
     }
     else
     {
-        <p class="lead">Find and enter running, walking and cycling events across South Africa.</p>
-        <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Get started</a>
-        <a asp-controller="Account" asp-action="Login" class="btn btn-outline-secondary">Log in</a>
+        <p class="lead mb-4">Welcome back, @fullName. Ready for your next race?</p>
+        <a asp-controller="Participant" asp-action="Index" class="btn btn-primary btn-lg">Browse events</a>
+        <a asp-controller="Participant" asp-action="MyEnrolments" class="btn btn-outline-light btn-lg">My enrolments</a>
     }
 </div>

@@ -1,31 +1,138 @@
+:root {
+    --rd-navy: #0b1f3a;
+    --rd-orange: #d9480f;
+    --rd-orange-dark: #b23a0a;
+    --rd-bg: #f4f6f8;
+    --bs-primary: #d9480f;
+    --bs-primary-rgb: 217, 72, 15;
+    --bs-link-color: #d9480f;
+    --bs-link-color-rgb: 217, 72, 15;
+    --bs-link-hover-color: #b23a0a;
+    --bs-link-hover-color-rgb: 178, 58, 10;
+    --bs-body-font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    font-size: 15px;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background: var(--rd-bg);
+    color: #1d2733;
+    margin-bottom: 60px;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Headings: bold, condensed, italic, the "sports broadcast" look */
+h1, h2, h3, h4, h5, .h1, .h2, .h3, .h4, .h5 {
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: var(--rd-navy);
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Navigation bar */
+.rd-navbar {
+    background: var(--rd-navy);
+    border-bottom: 4px solid var(--rd-orange);
+}
+
+.rd-brand {
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.9rem;
+    letter-spacing: .06em;
+    color: #fff !important;
+}
+
+    .rd-brand span {
+        color: #ff8a3d;
+    }
+
+.rd-navbar .nav-link {
+    color: rgba(255,255,255,.8);
+    font-weight: 600;
+}
+
+    .rd-navbar .nav-link:hover {
+        color: #fff;
+    }
+
+.rd-navbar .navbar-text {
+    color: rgba(255,255,255,.75);
+}
+
+/* Buttons */
+.btn-primary {
+    --bs-btn-bg: var(--rd-orange);
+    --bs-btn-border-color: var(--rd-orange);
+    --bs-btn-hover-bg: var(--rd-orange-dark);
+    --bs-btn-hover-border-color: var(--rd-orange-dark);
+    --bs-btn-active-bg: #9a3208;
+    --bs-btn-active-border-color: #9a3208;
+    --bs-btn-disabled-bg: var(--rd-orange);
+    --bs-btn-disabled-border-color: var(--rd-orange);
+    font-weight: 600;
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--rd-orange);
+    --bs-btn-border-color: var(--rd-orange);
+    --bs-btn-hover-bg: var(--rd-orange);
+    --bs-btn-hover-border-color: var(--rd-orange);
+    --bs-btn-active-bg: var(--rd-orange);
+    --bs-btn-active-border-color: var(--rd-orange);
+}
+
+/* Cards and tables */
+.card {
+    border: 0;
+    box-shadow: 0 1px 4px rgba(11, 31, 58, .15);
+}
+
+.table thead th {
+    background-color: var(--rd-navy);
+    color: #fff;
+    border-color: var(--rd-navy);
+}
+
+/* Forms */
+.form-control:focus, .form-select:focus, .form-check-input:focus {
+    border-color: var(--rd-orange);
+    box-shadow: 0 0 0 .2rem rgba(217, 72, 15, .2);
+}
+
+.form-check-input:checked {
+    background-color: var(--rd-orange);
+    border-color: var(--rd-orange);
+}
+
+/* Home page banner */
+.rd-hero {
+    background: linear-gradient(135deg, var(--rd-navy), #16365f);
+    color: #fff;
+    border-radius: .75rem;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+    .rd-hero h1 {
+        color: #fff;
+        font-size: 3.5rem;
+    }
+
+    .rd-hero .lead {
+        color: rgba(255,255,255,.85);
+    }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 60px;
+    white-space: nowrap;
 }

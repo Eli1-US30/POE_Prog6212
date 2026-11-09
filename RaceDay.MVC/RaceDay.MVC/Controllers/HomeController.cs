@@ -21,5 +21,12 @@ namespace RaceDay.MVC.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult StatusPage(int code)
+        {
+            Response.StatusCode = code;
+            ViewData["Code"] = code;
+            return View();
+        }
     }
 }
